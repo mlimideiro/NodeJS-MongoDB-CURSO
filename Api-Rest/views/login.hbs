@@ -1,0 +1,24 @@
+<form id="login" method="post">
+    <input type="email" name="email" value="" placeholder="Tu Email">
+    <br><br>
+    <input type="password" name="password" value="" placeholder="Tu Contraseña">
+    <br><br>
+    <input type="submit" value="Login"> 
+</form>
+
+<script type="text/javascript">
+    const formLogin = document.querySelector('#login') 
+    const formData = new FormData(formLogin) //CREACION OBJETO formData INCLUYE DATOS DEL FORMULARIO
+
+    formLogin.addEventListener('submit', event => { //ESCUCHA EL EVENTO DE submit
+        event.preventDefault() //COMPORTAMIENTO POR DEFECTO DE LA PAGINA NO SEA RECARGAR
+        fetch('/api/signin', { 
+            method: 'POST', //METODO DE TIPO POST
+            body: FormData 
+        })
+        .then(res => res.json()) //PROMESA CON RESPUESTA EN FORMATO JSON
+        .then(data => {
+            localStorage.setItem('token', data.token)
+        }) 
+    })
+</script>
